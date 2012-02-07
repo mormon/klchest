@@ -103,7 +103,7 @@ minetest.register_node("klchest:item_lockable_chest", {
 		"default_chest_side.png", "chest_chest_front.png"},
 	inventory_image = minetest.inventorycube("default_chest_top.png", 
         "chest_chest_front.png", "default_chest_side.png"),
-	paramtype = "facedir_simple",
+	paramtype2 = "facedir",
 	metadata_name = "generic",
 	material = minetest.digprop_woodlike(3.0),
 })
