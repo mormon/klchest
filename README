@@ -1,0 +1,67 @@
+klchest makes key-lockable-chest node, lock crafting item and key tool
+recipes:
+
+S == steel ingot
+W == wood
+C == default:chest
+L == klchest:lock
+
+key:
+  S S S
+      S
+
+
+lock:
+    S
+  S   S
+    S
+
+
+lockable chest (2 recipes available):
+  R1         R2
+  W W W      C L
+  W L W
+  W W W
+
+chest has by default a bit smaller capacity than default:chest, 
+the slots on the left are:
+top - key
+bottom - lock
+
+currently keys are encoded by putting 2 new keys in both 
+lock and key slot and punching the chest
+
+locking and unlocking can be done with 2 methods:
+- punch the chest while corresponding key is in top slot
+- wielding correct key - use it on the chest (punch?)
+
+License of klchest mod textures
+-------------------------------------------
+
+This applies to textures and sounds contained in the main Minetest
+distribution.
+
+Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+http://creativecommons.org/licenses/by-sa/3.0/
+
+License of klchest mod source code
+-----------------------------------
+
+klchest
+Copyright (C) 2011 matusz, Piotr Matuszewski
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
