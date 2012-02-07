@@ -24,6 +24,36 @@ minetest.register_craftitem('klchest:lock', {
     inventory_image = 'chest_lock.png',
 })
 
+minetest.register_craft({
+    output = 'klchest:key_duplicator',
+    recipe = {
+        {'default:wood', '', 'default:wood'},
+    }
+})
+
+minetest.register_node("klchest:key_duplicator", {
+    tile_images = {"default_wood.png", "default_wood.png", "default_wood.png",
+        "default_wood.png", "default_wood.png", "chest_chest_front.png"},
+    description = 'Key duplicator',
+    paramtype2 = "facedir",
+    metadata_name = "generic",
+    material = minetest.digprop_woodlike(3.0),
+})
+
+
+minetest.register_on_placenode(function(pos, newnode, placer)
+    if newnode.name == "klchest:key_duplicator" then
+        local meta = minetest.env:get_meta(pos)
+        meta:get_inventory():set_list("newkey", {""})
+        meta:set_inventory_draw_spec(
+            "invsize[8,9;]list[current_name;newkey;4,2;1,1;]"
+            .."list[current_player;main;0,5;8,4;]"
+        )
+        meta:set_infotext("---")
+        
+    end
+end)
+
 minetest.register_tool('klchest:key', {
     description = 'Key',
     stack_max = 1,
@@ -43,30 +73,47 @@ minetest.register_tool('klchest:key', {
     on_use = function(itemstack, user, pointed_thing)
 --        print("klchest:key.on_use()")
         local meta=minetest.env:get_meta(pointed_thing.under)
+        local node=minetest.env:get_node(pointed_thing.under)
         --print("MN:".. meta.name)
         --if meta.name~="klchest:item_lockable_chest" then
         --    return
         --end
-        local inven = meta:get_inventory()
-        if inven==nil then
-            return
-        end
-        local lock_s = inven:get_stack("lock",1)
-        print("I:"..dump(itemstack:to_string()))
-        print("LOCK:"..dump(lock_s:to_string())..";"..lock_s:get_wear())
-        if itemstack:to_string()==lock_s:to_string() then
+        if node.name=='klchest:item_lockable_chest' then
+            local inven = meta:get_inventory()
+            if inven==nil then
+                return
+            end
+            print("NAME:"..node.name)
+            local lock_s = inven:get_stack("lock",1)
+            print("I:"..dump(itemstack:to_string()))
+            print("LOCK:"..dump(lock_s:to_string())..";"..lock_s:get_wear())
+            if itemstack:to_string()==lock_s:to_string() then
 
-            print("EQUAL")
-          local status = meta:get_string("status")
-          if status=="locked" and lock==key then
-              meta:set_inventory_draw_spec(open_spec)
-              meta:set_string("status", "unlocked")
-          elseif status=="unlocked" and lock ~= "" then
-              meta:set_inventory_draw_spec(locked_spec)
-              meta:set_string("status", "locked")
-          end
-          status = meta:get_string("status")
-		  meta:set_infotext("Chest is "..status)
+              print("EQUAL")
+              local status = meta:get_string("status")
+              if status=="locked" and lock==key then
+                  meta:set_inventory_draw_spec(open_spec)
+                  meta:set_string("status", "unlocked")
+              elseif status=="unlocked" and lock ~= "" then
+                  meta:set_inventory_draw_spec(locked_spec)
+                  meta:set_string("status", "locked")
+              end
+              status = meta:get_string("status")
+		      meta:set_infotext("Chest is "..status)
+            end
+        elseif node.name=='klchest:key_duplicator' then
+            meta:set_infotext('Key:'..itemstack:get_wear())
+            local inven = meta:get_inventory()
+            if inven == nil then
+                return
+            end
+            local newkey_s = inven:get_stack("newkey",1)
+            if newkey_s:get_name()=='klchest:key' and newkey_s:get_wear()==0 then
+                print("N:"..newkey_s:get_name())
+                newkey_s:add_wear(itemstack:get_wear())
+                inven:set_stack("newkey",1,newkey_s)
+                meta:set_infotext('Key duplicated')
+            end
         end
     end,
 })
@@ -96,8 +143,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("klchest:item_lockable_chest", {
-	description = "Chest-bricky",
---    diggable = false,
+	description = "Lockable chest",
 	tile_images = {"default_chest_top.png", "default_chest_side.png",
 		"default_chest_side.png", "default_chest_side.png",
 		"default_chest_side.png", "chest_chest_front.png"},
@@ -128,8 +174,11 @@ end)
 
 minetest.register_on_punchnode(
   function(pos, node)
-      if node.name=="klchest:item_lockable_chest" then
-          --minetest.debug("bricky chest punched")
+      if node.name=='klchest:key_duplicator' then
+          local meta = minetest.env:get_meta(pos)
+          meta:set_infotext('---')
+          --print(dump(node))
+      elseif node.name=="klchest:item_lockable_chest" then
           local meta = minetest.env:get_meta(pos)
           local inven = meta:get_inventory()
           local status = meta:get_string("status")
