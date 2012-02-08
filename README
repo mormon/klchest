@@ -1,4 +1,5 @@
 klchest makes key-lockable-chest node, lock crafting item and key tool
+key-duplicator node
 recipes:
 
 S == steel ingot
@@ -23,6 +24,9 @@ lockable chest (2 recipes available):
   W L W
   W W W
 
+key duplicator
+  W _ W
+
 chest has by default a bit smaller capacity than default:chest, 
 the slots on the left are:
 top - key
@@ -34,6 +38,11 @@ lock and key slot and punching the chest
 locking and unlocking can be done with 2 methods:
 - punch the chest while corresponding key is in top slot
 - wielding correct key - use it on the chest (punch?)
+
+key duplicator works by inserting a fresh key and punching the
+duplicator with an encoded key
+additionally punching empty duplicator displays key encoding
+punching with anything else resets infotext
 
 License of klchest mod textures
 -------------------------------------------
