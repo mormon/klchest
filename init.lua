@@ -74,7 +74,7 @@ minetest.register_node("klchest:key_duplicator", {
     description = 'Key duplicator',
     paramtype2 = "facedir",
     metadata_name = "generic",
-    material = minetest.digprop_woodlike(3.0),
+    groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 })
 
 minetest.register_tool('klchest:key', {
@@ -140,7 +140,7 @@ minetest.register_node("klchest:item_lockable_chest", {
         "chest_chest_front.png", "default_chest_side.png"),
 	paramtype2 = "facedir",
 	metadata_name = "generic",
-	material = minetest.digprop_woodlike(3.0),
+    groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 })
 
 -- Callbacks
