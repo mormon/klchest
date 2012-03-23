@@ -65,12 +65,12 @@ minetest.register_craft({
 
 minetest.register_craftitem('klchest:lock', {
     description = 'Lock',
-    inventory_image = 'chest_lock.png',
+    inventory_image = 'klchest_lock.png',
 })
 
 minetest.register_node("klchest:key_duplicator", {
     tile_images = {"default_wood.png", "default_wood.png", "default_wood.png",
-        "default_wood.png", "default_wood.png", "chest_chest_front.png"},
+        "default_wood.png", "default_wood.png", "klchest_chest_front.png"},
     description = 'Key duplicator',
     paramtype2 = "facedir",
     metadata_name = "generic",
@@ -80,7 +80,7 @@ minetest.register_node("klchest:key_duplicator", {
 minetest.register_tool('klchest:key', {
     description = 'Key',
     stack_max = 1,
-    inventory_image = 'chest_key.png',
+    inventory_image = 'klchest_key.png',
     tool_digging_properties = {
         basetime = 0,
         dt_weight = 0,
@@ -135,9 +135,9 @@ minetest.register_node("klchest:item_lockable_chest", {
 	description = "Lockable chest",
 	tile_images = {"default_chest_top.png", "default_chest_side.png",
 		"default_chest_side.png", "default_chest_side.png",
-		"default_chest_side.png", "chest_chest_front.png"},
+		"default_chest_side.png", "klchest_chest_front.png"},
 	inventory_image = minetest.inventorycube("default_chest_top.png", 
-        "chest_chest_front.png", "default_chest_side.png"),
+        "klchest_chest_front.png", "default_chest_side.png"),
 	paramtype2 = "facedir",
 	metadata_name = "generic",
     groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
